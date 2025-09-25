@@ -206,6 +206,10 @@ jobs:
         key: build-kernel-${{ env.DEVICE }}${{ env.UPLOADNAME }}
         max-size: 2G
 
+    - name: Patch KernelSU - comment out MODULE_IMPORT_NS
+      run: |
+        sed -i 's/^MODULE_IMPORT_NS(.*)/\/\/ &/' drivers/kernelsu/ksu.c
+
     - name: Build kernel
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
