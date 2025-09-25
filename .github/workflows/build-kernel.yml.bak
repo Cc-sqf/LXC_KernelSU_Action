@@ -206,12 +206,6 @@ jobs:
         key: build-kernel-${{ env.DEVICE }}${{ env.UPLOADNAME }}
         max-size: 2G
 
-    - name: Patch KernelSU to fix MODULE_IMPORT_NS error
-      run: |
-        # 注释掉 ksu.c 中的 MODULE_IMPORT_NS 行（第 97 行附近）
-        sed -i 's/^MODULE_IMPORT_NS/VFS_internal_I_am_really_a_filesystem_and_am_NOT_a_driver)/\/\/ MODULE_IMPORT_NS(VFS_internal_I_am_really_a_filesystem_and_am_NOT_a_driver)/' \
-            drivers/kernelsu/ksu.c
-
     - name: Build kernel
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
